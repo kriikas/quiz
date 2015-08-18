@@ -1,4 +1,4 @@
-<form method="get" action="/quizes/<=% quiz.id %>/answer">
+<form method="get" action='/quizes/<%= quiz.id %>/answer'>
   <label>Pregunta: <%= quiz.pregunta %> </label>
   <input type="text" name="respuesta" placeholder="Responda aqui" />
   <input type="submit" value="Enviar">
