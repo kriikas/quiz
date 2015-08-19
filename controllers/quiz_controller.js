@@ -15,8 +15,16 @@ exports.load = function (req, res, next, quizId) {
 };
 
 //GET /quizes
-exports.index = function (req, res) {
+exports.index = function (req, res, next) {
   models.Quiz.findAll().then(function(quizes) {
+    if(req.query.search){
+      for(var i = 0; i < quizes.length; i++){
+        //console.log(quizes[i].pregunta.toLowerCase().match(req.query.search.toLowerCase()));
+        if(!quizes[i].pregunta.toLowerCase().match(req.query.search.toLowerCase())){
+          quizes.splice(i--,1);
+        }
+      }
+    }
     res.render('quizes/index', { quizes: quizes});
   }).catch(function (error) { next(error);});
 };
