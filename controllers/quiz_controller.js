@@ -56,10 +56,21 @@ exports.new = function (req, res) {
 exports.create = function (req, res) {
   var quiz = models.Quiz.build(req.body.quiz);
 
-  //guarda en DB los campos pregunta y respuesta de quiz
-  quiz.save({fields: ["pregunta", "respuesta"]}).then(function () {
-    res.redirect('/quizes');
-  });   //Redireccion HTTP (URL relativo) lista de preguntas
+  quiz
+  .validate()
+  .then(
+    function (err) {
+      if(err){
+        res.render('quizes/new', {quiz: quiz, errors: err.errors});
+        console.log("exite error");
+      }else{
+        console.log("No exite error");
+        quiz   // save(): guarda en DB los campos pregunta y respuesta de quiz
+        .save({fields: ["pregunta", "respuesta"]})
+        .then( function () { res.redirect('/quizes')})
+      } //res.redirect(): Redireccion HTTP (URL relativo) lista de preguntas
+    }
+  );
 };
 
 exports.author = function (req, res) {
