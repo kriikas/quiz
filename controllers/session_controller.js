@@ -1,6 +1,6 @@
 //MW de autorizacion de accesos HTTP restringidos
 exports.loginRequired = function (req, res, next) {
-  if(req,session.user){//si existe usuario logueado
+  if(req.session.user){//si existe usuario logueado
     next();//ejecuta siguiente MW instalado en la ruta a la que se llama en routes/index.js
   }else{
     res.redirect('/login');
