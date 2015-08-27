@@ -40,20 +40,11 @@ app.use(function (req, res, next) {
 });
 
 app.use(function (req, res, next) {
-  /*
-  horaLimite = new Date(hora.setMinutes(hora.getMinutes() - 2));
-  console.log("horaLimite: " + horaLimite.toString());
-  console.log("if: " + req.session.horaUltimaPeticion && req.session.horaUltimaPeticion < horaLimite );
-  */
   hora = new Date().getTime();
-  console.log("hora: " + hora.toString());
-  if(req.session.horaUltimaPeticion)
-  console.log("horaUltimaPeticion: " + req.session.horaUltimaPeticion.toString());
   if(req.session.horaUltimaPeticion && hora - req.session.horaUltimaPeticion > 12000){
     delete req.session.user;
   }
   req.session.horaUltimaPeticion = hora;
-  console.log("Hora ultima peticion: "+ req.session.horaUltimaPeticion.toString());
   next();
 });
 
